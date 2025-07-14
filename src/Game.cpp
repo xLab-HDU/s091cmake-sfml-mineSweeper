@@ -1,7 +1,5 @@
 #include "Game.h"
 
-
-
 Game::Game()
 	:tBackground(), tTiles(), tButtons(), tNum(), tTimer(), tCounter(), tGameOver(),
 	sBackground(tBackground), sTiles(tTiles), sButtons(tButtons), sNum(tNum), sTimer(tTimer), sCounter(tCounter), sGameOver(tGameOver),
@@ -27,7 +25,6 @@ Game::Game()
 	uint8_t WindowStyle = sf::Style::Close | sf::Style::Titlebar;
 	window.create(sf::VideoMode({ Window_width, Window_height }), L"MineSweeper by 李仕", WindowStyle);
 }
-
 
 Game::~Game()
 {
@@ -120,8 +117,8 @@ void Game::LoadMediaData()
 	{
 		std::cout << "gameover.jpg 没有找到" << std::endl;
 	}
-	sBackground.setTexture(tBackground,true);
-	sTiles.setTexture(tTiles,true);
+	sBackground.setTexture(tBackground, true);
+	sTiles.setTexture(tTiles, true);
 	if (gamelvl == 1)
 	{
 		float scale = 1.0 * LVL2_WIDTH / LVL1_WIDTH;
@@ -132,11 +129,11 @@ void Game::LoadMediaData()
 		sTiles.setScale({ 1.0, 1.0 });//栅格尺寸取消缩放
 	}
 
-	sButtons.setTexture(tButtons,true);
-	sNum.setTexture(tNum,true);
-	sTimer.setTexture(tTimer,true);
-	sCounter.setTexture(tCounter,true);
-	sGameOver.setTexture(tGameOver,true);
+	sButtons.setTexture(tButtons, true);
+	sNum.setTexture(tNum, true);
+	sTimer.setTexture(tTimer, true);
+	sCounter.setTexture(tCounter, true);
+	sGameOver.setTexture(tGameOver, true);
 
 }
 void Game::MineSet(int Py, int Px)		//布雷
@@ -287,63 +284,59 @@ void Game::Input()
 				}
 			}
 
-
 			if (mouseButtonPressed->button == sf::Mouse::Button::Left)
 			{
-				// if (const auto* mouseMoved = event->getIf<sf::Event::MouseMoved>())
-				// {
-					if (isGameOverState == ncNo)
-					{//20200423
-						if (mouseDlbClkReady)
-							mouseDlbClkReady = false;
-						else
-						{
-							P1 = Mouse::getPosition(window);
-							if (mouseClickTimer.getElapsedTime().asMilliseconds() < 700 && P2.x - P1.x < gridSize / 4 && P2.y - P1.y < gridSize / 4
-								&& P2.x - P1.x > -gridSize / 4 && P2.y - P1.y > -gridSize / 4)
-								LButtonDblClk(P2);//当两次点击的间隔小于500毫秒，则判定为鼠标双击
-						}
-
-						mouse_RL_ClkReady = 0;//20200423
-
-						//按钮判断
-						if (isGameBegin == false)
-						{
-
-							if (ButtonRectEasy.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
-								gamelvl = 1;
-							if (ButtonRectNormal.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
-								gamelvl = 2;
-							if (ButtonRectHard.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
-								gamelvl = 3;
-							Initial();//及时刷新舞台
-
-						}
-					}
-					if (ButtonRectBG.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
+				if (isGameOverState == ncNo)
+				{//20200423
+					if (mouseDlbClkReady)
+						mouseDlbClkReady = false;
+					else
 					{
-						imgBGNo++;
-						if (imgBGNo > 7)//大于背景图的总数时候
-							imgBGNo = 1;//重新轮换背景图
-						LoadMediaData();
+						P1 = Mouse::getPosition(window);
+						if (mouseClickTimer.getElapsedTime().asMilliseconds() < 700 && P2.x - P1.x < gridSize / 4 && P2.y - P1.y < gridSize / 4
+							&& P2.x - P1.x > -gridSize / 4 && P2.y - P1.y > -gridSize / 4)
+							LButtonDblClk(P2);//当两次点击的间隔小于500毫秒，则判定为鼠标双击
 					}
-					if (ButtonRectSkin.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
+
+					mouse_RL_ClkReady = 0;//20200423
+
+					//按钮判断
+					if (isGameBegin == false)
 					{
-						imgSkinNo++;
-						if (imgSkinNo > 6)//大于皮肤图的总数时候
-							imgSkinNo = 1;//重新轮换皮肤图
-						LoadMediaData();
+
+						if (ButtonRectEasy.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
+							gamelvl = 1;
+						if (ButtonRectNormal.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
+							gamelvl = 2;
+						if (ButtonRectHard.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
+							gamelvl = 3;
+						Initial();//及时刷新舞台
+
 					}
-					if (ButtonRectRestart.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
-					{
-						Initial();
-					}
-					if (ButtonRectQuit.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
-					{
-						window.close();  //窗口可以移动、调整大小和最小化。但是如果要关闭，需要自己去调用close()函数
-						gameQuit = true;
-					}
-				// }
+				}
+				if (ButtonRectBG.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
+				{
+					imgBGNo++;
+					if (imgBGNo > 7)//大于背景图的总数时候
+						imgBGNo = 1;//重新轮换背景图
+					LoadMediaData();
+				}
+				if (ButtonRectSkin.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
+				{
+					imgSkinNo++;
+					if (imgSkinNo > 6)//大于皮肤图的总数时候
+						imgSkinNo = 1;//重新轮换皮肤图
+					LoadMediaData();
+				}
+				if (ButtonRectRestart.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
+				{
+					Initial();
+				}
+				if (ButtonRectQuit.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
+				{
+					window.close();  //窗口可以移动、调整大小和最小化。但是如果要关闭，需要自己去调用close()函数
+					gameQuit = true;
+				}
 			}
 
 			if (mouseButtonPressed->button == sf::Mouse::Button::Right)
