@@ -15,7 +15,7 @@
 #define LVL3_HEIGHT 16
 #define LVL3_NUM 99
 //枚举定义网格状态
-typedef enum GRIDSTATE
+enum GRIDSTATE
 {
 	ncNULL,				//空地
 	ncUNDOWN,		    //背景方块
@@ -33,7 +33,7 @@ typedef enum GRIDSTATE
 	ncX,				//备用
 	ncBOMBING,			//爆炸的雷
 	ncUNFOUND			//未检测出来的雷
-}gridState;
+};
 enum GAMEOVERSTATE
 {
 	ncNo,		//游戏未结束
@@ -42,7 +42,7 @@ enum GAMEOVERSTATE
 };
 using namespace sf;			//SFML中的每个类都位于该命名空间之下，不设定sf命名空间的话，相应的函数前需要用作用域解析符，例如 sf::VideoMode(width* GRIDSIZE, height* GRIDSIZE)
 
-class LEI
+class MINE
 {
 public:
 	int mState;			//栅格的状态
@@ -61,7 +61,7 @@ public:
 	unsigned int Window_width, Window_height;
 	int stageWidth, stageHeight, mMineNum, mFlagCalc, mouse_RL_ClkReady;
 	int gamelvl, mTime;  //游戏难度，游戏计时
-	LEI mGameData[LVL3_HEIGHT][LVL3_WIDTH];		//数组取最高难度的舞台尺寸
+	MINE mGameData[LVL3_HEIGHT][LVL3_WIDTH];		//数组取最高难度的舞台尺寸
 	bool isGameBegin, isMineSetBegin;		//游戏是否开始
 	bool testMode;
 	int isGameOverState;	//游戏结束的状态
