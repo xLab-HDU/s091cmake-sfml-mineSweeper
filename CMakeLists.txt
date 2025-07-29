@@ -43,9 +43,9 @@ target_link_libraries(Game
 target_link_libraries(main
     PUBLIC
         Game
-        # 静态链接运行时库
-        -static-libgcc
-        -static-libstdc++
+        # 针对MinGW，需要添加静态链接运行时库
+        # -static-libgcc
+        # -static-libstdc++
 )
 
 
@@ -59,9 +59,9 @@ install(DIRECTORY "data/"
         FILES_MATCHING PATTERN "*"
 )
 
-set(CPACK_PACKAGE_NAME "CMakeSFMLProject")
+set(CPACK_PACKAGE_NAME "MineSweeper")
 set(CPACK_PACKAGE_VERSION "1.0.0")
 set(CPACK_PACKAGE_VENDOR "HDU")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CMake-SFML-Project")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CMake-SFML-MineSweeper")
 set(CPACK_PACKAGE_CONTACT "contact@example.com")
 include(CPack)
