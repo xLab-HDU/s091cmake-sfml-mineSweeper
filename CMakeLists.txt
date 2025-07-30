@@ -4,7 +4,7 @@ project(CMakeSFMLProject LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # 选项：是否将SFML库构建为共享库，动态模式设为 ON；静态模式则设为 OFF
-option(BUILD_SHARED_LIBS "Build SFML libraries as shared" OFF)
+# option(BUILD_SHARED_LIBS "Build SFML libraries as shared" OFF)
 
 # 查找本地安装的 SFML 开发包
 # set(SFML_STATIC_LIBRARIES TRUE) # 配合上面的 BUILD_SHARED_LIBS OFF 可实现静态链接
