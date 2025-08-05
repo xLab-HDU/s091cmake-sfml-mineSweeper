@@ -1,7 +1,7 @@
 # CMake SFML MineSweeper
 This repository is a MineSweeper game implemented in C++ using SFML, built with CMake. 
 
-[![Build Status](https://github.com/xLab-HDU/cmake-sfml-minewSweeper/actions/workflows/ci.yml/badge.svg)](https://github.com/xLab-HDU/cmake-sfml-mineSweeper/actions)
+[![Build Status](https://github.com/xLab-HDU/cmake-sfml-mineSweeper/actions/workflows/ci.yml/badge.svg)](https://github.com/xLab-HDU/cmake-sfml-mineSweeper/actions)
 
 ## How to Use
 
