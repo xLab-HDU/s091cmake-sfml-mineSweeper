@@ -8,17 +8,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # 查找本地安装的 SFML 开发包
 # set(SFML_STATIC_LIBRARIES TRUE) # 配合上面的 BUILD_SHARED_LIBS OFF 可实现静态链接
-# find_package(SFML COMPONENTS Graphics Window System Audio Network REQUIRED)
+find_package(SFML COMPONENTS Graphics Window System Audio Network REQUIRED)
 
 # 获取SFML源码并构建
-include(FetchContent)
-FetchContent_Declare(SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 3.0.1
-    GIT_SHALLOW ON
-    EXCLUDE_FROM_ALL
-    SYSTEM)
-FetchContent_MakeAvailable(SFML)
+# include(FetchContent)
+# FetchContent_Declare(SFML
+#     GIT_REPOSITORY https://github.com/SFML/SFML.git
+#     GIT_TAG 3.0.1
+#     GIT_SHALLOW ON
+#     EXCLUDE_FROM_ALL
+#     SYSTEM)
+# FetchContent_MakeAvailable(SFML)
 
 add_library(Game src/Game.cpp) # 创建一个库目标
 # 设置 Game 目标的包含目录
@@ -43,11 +43,15 @@ target_link_libraries(Game
 target_link_libraries(main
     PUBLIC
         Game
-        # 针对MinGW，需要添加静态链接运行时库
-        # -static-libgcc
-        # -static-libstdc++
 )
 
+# 针对MinGW，静态链接时需要将 libstdc++ 和 libgcc 编译进可执行文件中，避免运行时依赖外部 DLL
+if(CMAKE_CXX_COMPILER_ID MATCHES "MinGW")
+    target_link_libraries(main PRIVATE
+        -static-libgcc
+        -static-libstdc++
+    )
+endif()
 
 # 测试 & 打包
 enable_testing()

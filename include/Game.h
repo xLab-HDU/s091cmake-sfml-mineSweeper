@@ -56,7 +56,7 @@ public:
 	sf::RenderWindow window;
 	Game();
 	~Game();
-	bool gameOver, gameQuit, ButtonEasyState, ButtonNormalState, ButtonHardState, ButtonBGState, ButtonSkinState, ButtonRestartState, ButtonQuitState;
+	bool isGameOver, isGameQuit, ButtonEasyState, ButtonNormalState, ButtonHardState, ButtonBGState, ButtonSkinState, ButtonRestartState, ButtonQuitState;
 	bool mouseDlbClkReady, RL_ClkJudge_flag;
 	unsigned int Window_width, Window_height;
 	int stageWidth, stageHeight, mMineNum, mFlagCalc, mouse_RL_ClkReady;
@@ -64,7 +64,7 @@ public:
 	MINE mGameData[LVL3_HEIGHT][LVL3_WIDTH];		//数组取最高难度的舞台尺寸
 	bool isGameBegin, isMineSetBegin;		//游戏是否开始
 	bool testMode;
-	int isGameOverState;	//游戏结束的状态
+	int gameOverState;	//游戏结束的状态
 	sf::Vector2i mCornPoint;	//舞台的左顶点坐标
 	Vector2i P1, P2;//20200322 两处位置快速点击触发双击的BUG修订
 	Vector2i RL_Point;//2020416

@@ -2,9 +2,9 @@
 
 int main()
 {
-	Game Mine;
-	while (Mine.window.isOpen())
+	Game SweeperMine;
+	while (SweeperMine.window.isOpen())
 	{
-		Mine.Run();
+		SweeperMine.Run();
 	}
 }
