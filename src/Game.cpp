@@ -56,10 +56,10 @@ void Game::Initial()
 	default:
 		break;
 	}
-	gameOver = false;
-	gameQuit = false;
+	isGameOver = false;
+	isGameQuit = false;
 	testMode = false;
-	isGameOverState = ncNo;	//初始化游戏的结束状态
+	gameOverState = ncNo;	//初始化游戏的结束状态
 	mFlagCalc = 0;			//初始化旗子的数量
 	isGameBegin = false;	//初始化游戏是否开始
 	isMineSetBegin = false;	//初始化游戏是否开始布雷
@@ -250,7 +250,7 @@ void Game::Input()
 		if (event->is<sf::Event::Closed>())
 		{
 			window.close();		//窗口可以移动、调整大小和最小化。但是如果要关闭，需要自己去调用close()函数
-			gameQuit = true;
+			isGameQuit = true;
 		}
 		// 按键事件
 		if (const auto* KeyReleased = event->getIf<sf::Event::KeyReleased>())
@@ -258,14 +258,14 @@ void Game::Input()
 			if (KeyReleased->scancode == sf::Keyboard::Scancode::Escape)
 			{
 				window.close();  //窗口可以移动、调整大小和最小化。但是如果要关闭，需要自己去调用close()函数
-				gameQuit = true;
+				isGameQuit = true;
 			}
 		}
 		// 鼠标事件
 		if (const auto* mouseButtonPressed = event->getIf<sf::Event::MouseButtonPressed>())
 		{
 			if (mouseButtonPressed->button == sf::Mouse::Button::Left) {
-				if (isGameOverState == ncNo)
+				if (gameOverState == ncNo)
 				{//20200423
 					if (mouseClickTimer.getElapsedTime().asMilliseconds() > 700)//如果间隔大于500ms则是单击
 					{
@@ -286,7 +286,7 @@ void Game::Input()
 
 			if (mouseButtonPressed->button == sf::Mouse::Button::Left)
 			{
-				if (isGameOverState == ncNo)
+				if (gameOverState == ncNo)
 				{//20200423
 					if (mouseDlbClkReady)
 						mouseDlbClkReady = false;
@@ -301,7 +301,7 @@ void Game::Input()
 					mouse_RL_ClkReady = 0;//20200423
 
 					//按钮判断
-					if (isGameBegin == false)
+					if (isGameBegin == false && gameOverState == ncNo)
 					{
 
 						if (ButtonRectEasy.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
@@ -335,13 +335,13 @@ void Game::Input()
 				if (ButtonRectQuit.contains({ mouseButtonPressed->position.x, mouseButtonPressed->position.y }))
 				{
 					window.close();  //窗口可以移动、调整大小和最小化。但是如果要关闭，需要自己去调用close()函数
-					gameQuit = true;
+					isGameQuit = true;
 				}
 			}
 
 			if (mouseButtonPressed->button == sf::Mouse::Button::Right)
 			{
-				if (isGameOverState == ncNo)
+				if (gameOverState == ncNo)
 				{
 					mouse_RL_ClkReady++;
 
@@ -564,7 +564,7 @@ void Game::LButtonDown(Vector2i mPoint)		//鼠标左击
 				if (mGameData[j][i].mState == ncMINE)	//如果当前为雷
 				{
 					isGameBegin = false;
-					isGameOverState = ncLOSE;
+					gameOverState = ncLOSE;
 					mGameData[j][i].mState = ncBOMBING;
 					unCover();	//揭开剩下未被找到的雷
 				}
@@ -607,7 +607,7 @@ void Game::LButtonDblClk(Vector2i mPoint)		//鼠标左键双击
 							{
 								if (mGameData[k][l].mStateBackUp != ncMINE)//如果原先状态不是雷
 								{
-									isGameOverState = ncLOSE;
+									gameOverState = ncLOSE;
 									isGameBegin = false;
 									unCover();
 								}
@@ -619,7 +619,7 @@ void Game::LButtonDblClk(Vector2i mPoint)		//鼠标左键双击
 									mGameData[k][l].isPress = true;
 									if (mGameData[k][l].mState == ncMINE)//如果为雷
 									{
-										isGameOverState = ncLOSE;
+										gameOverState = ncLOSE;
 										isGameBegin = false;
 										mGameData[k][l].mState = ncBOMBING;
 										unCover();
@@ -644,7 +644,7 @@ void Game::isWin()
 {
 	int i, j, c = 0;
 
-	if (isGameOverState != ncLOSE)
+	if (gameOverState != ncLOSE)
 	{
 		for (i = 0; i < stageWidth; i++)
 			for (j = 0; j < stageHeight; j++)
@@ -659,7 +659,7 @@ void Game::isWin()
 		isGameBegin = false;
 		mFlagCalc = mMineNum;
 		undownOpen();
-		isGameOverState = ncWIN;
+		gameOverState = ncWIN;
 	}
 }
 
@@ -707,7 +707,7 @@ void Game::Draw()
 	DrawScore();
 	DrawTimer();
 
-	if (isGameOverState)
+	if (gameOverState)
 		DrawGameEnd();
 
 	window.display();//把显示缓冲区的内容，显示在屏幕上。SFML采用的是双缓冲机制
@@ -914,9 +914,9 @@ void Game::DrawGameEnd()
 
 	sGameOver.setPosition({ static_cast<float>(LeftCorner.x), static_cast<float>(LeftCorner.y) });
 
-	if (isGameOverState == ncWIN)
+	if (gameOverState == ncWIN)
 		sGameOver.setTextureRect(IntRect({ 0 * ButtonWidth, 0 }, { ButtonWidth, ButtonHeight }));
-	if (isGameOverState == ncLOSE)
+	if (gameOverState == ncLOSE)
 		sGameOver.setTextureRect(IntRect({ 1 * ButtonWidth, 0 }, { ButtonWidth, ButtonHeight }));
 
 	window.draw(sGameOver);
@@ -926,7 +926,7 @@ void Game::Run()
 	do
 	{
 		Initial();
-		while (window.isOpen() && gameOver == false)
+		while (window.isOpen() && isGameOver == false)
 		{
 			Input();
 
@@ -934,6 +934,6 @@ void Game::Run()
 
 			Draw();
 		}
-	} while (!gameQuit);
+	} while (!isGameQuit);
 
 }
