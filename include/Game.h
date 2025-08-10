@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-// #include <windows.h>
 #include <iostream>
 #include <sstream>
 #define GRIDSIZE 25
