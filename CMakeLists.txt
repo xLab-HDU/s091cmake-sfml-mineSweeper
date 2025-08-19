@@ -24,11 +24,7 @@ add_library(Game src/Game.cpp) # 创建一个库目标
 # 设置 Game 目标的包含目录
 target_include_directories(Game PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/include  # 如果有自己的头文件目录
-    ${SFML_INCLUDE_DIR}
 )
-
-add_executable(main src/main.cpp)   # 创建可执行文件目标
-target_compile_features(main PRIVATE cxx_std_17)
 
 # 链接库
 target_link_libraries(Game
@@ -40,6 +36,8 @@ target_link_libraries(Game
         SFML::Network
 )
 
+add_executable(main src/main.cpp)   # 创建可执行文件目标
+target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main
     PUBLIC
         Game
