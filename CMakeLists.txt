@@ -20,14 +20,14 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_library(Game src/Game.cpp) # 创建一个库目标
-# 设置 Game 目标的包含目录
-target_include_directories(Game PUBLIC 
+add_library(GameLib src/Game.cpp) # 创建一个库目标
+# 设置 GameLib 目标的包含目录
+target_include_directories(GameLib PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/include  # 如果有自己的头文件目录
 )
 
 # 链接库
-target_link_libraries(Game
+target_link_libraries(GameLib
     PUBLIC
         SFML::Graphics
         SFML::Window
@@ -40,7 +40,7 @@ add_executable(main src/main.cpp)   # 创建可执行文件目标
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main
     PUBLIC
-        Game
+        GameLib
 )
 
 # 在Windows系统中（使用 MinGW-w64）构建时
