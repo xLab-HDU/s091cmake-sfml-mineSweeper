@@ -85,35 +85,35 @@ void Game::IniData()
 void Game::LoadMediaData()
 {
 	std::stringstream ss;
-	ss << "../data/images/BK0" << imgBGNo << ".jpg";
+	ss << "./data/images/BK0" << imgBGNo << ".jpg";
 	if (!tBackground.loadFromFile(ss.str()))
 	{
 		std::cout << "BK image 没有找到" << std::endl;
 	}
 	ss.str(""); //清空字符串
-	ss << "../data/images/Game" << imgSkinNo << ".jpg";
+	ss << "./data/images/Game" << imgSkinNo << ".jpg";
 	if (!tTiles.loadFromFile(ss.str()))
 	{
 		std::cout << "Game Skin image 没有找到" << std::endl;
 	}
 
-	if (!tNum.loadFromFile("../data/images/num.jpg"))
+	if (!tNum.loadFromFile("./data/images/num.jpg"))
 	{
 		std::cout << "num.jpg 没有找到" << std::endl;
 	}
-	if (!tTimer.loadFromFile("../data/images/jishiqi.jpg"))
+	if (!tTimer.loadFromFile("./data/images/jishiqi.jpg"))
 	{
 		std::cout << "jishiqi.jpg 没有找到" << std::endl;
 	}
-	if (!tCounter.loadFromFile("../data/images/jishuqi.jpg"))
+	if (!tCounter.loadFromFile("./data/images/jishuqi.jpg"))
 	{
 		std::cout << "jishuqi.jpg 没有找到" << std::endl;
 	}
-	if (!tButtons.loadFromFile("../data/images/button.jpg"))
+	if (!tButtons.loadFromFile("./data/images/button.jpg"))
 	{
 		std::cout << "button.jpg 没有找到" << std::endl;
 	}
-	if (!tGameOver.loadFromFile("../data/images/gameover.jpg"))
+	if (!tGameOver.loadFromFile("./data/images/gameover.jpg"))
 	{
 		std::cout << "gameover.jpg 没有找到" << std::endl;
 	}
